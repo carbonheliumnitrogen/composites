@@ -6,16 +6,19 @@ from scipy import optimize
 import pwlf
 import warnings
 #warnings.filterwarnings("ignore")
+file_id = 14
 
-filename = 'T_Tension_4.csv'
-
+filename = 'T_Tension_' + str(file_id) +'.csv'
 plt.rcParams['font.sans-serif'] = "Lato"
 plt.rcParams['font.family'] = "sans-serif"
 plt.rcParams['font.size'] = 15
 
-original_length = 25.4
-original_area = 12.7*4.3
-
+original_length = 88.9
+#Markforged: 
+markforged = [54.61, 56.32, 54.61, 55.88, 55.88, 55.04, 55.88]
+#Hand layup:
+layup = [42.57, 35.84, 40.32, 40.96, 34.29, 36.83, 39.06, 35.00, 33.28, 34.29, 42.84, 35.56, 40.64, 37.12]
+original_area = layup[file_id-1]
 load_extension = []
 #This is a "list of lists": [[t1, stress1, strain1], [t2, stress2, strain2], ... ]
 with open(filename) as file:

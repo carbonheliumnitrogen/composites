@@ -5,16 +5,16 @@ import numpy as np
 plt.rcParams['font.sans-serif'] = "Adobe Heiti Std"
 plt.rcParams['font.family'] = "sans-serif"
 
-#Markforged samples (n = 7):
-#original_length = [88.9] * 7                                                                          #mm
-#original_area = [12.7*4.3, 12.8*4.4, 12.7*4.3, 12.7*4.4, 12.7*4.4, 12.8*4.3, 12.7*4.3]                #mm^2
+#Markforged samples (n = 4):
+#original_length = [0.00133533461, 0.00133533461, 0.001366388903, 0.00133533461]                                                    
+#original_area = [0.8809660627, 0.8879028034,0.8480022125,0.8809660627]
 #Hand layup samples (n = 15):
-original_length = [88.9] * 14 # [25.3, 25.4, 25.3, 25.4, 25.4, 25.4, 25.4, 25.4, 25.3, 25.3, 25.3, 25.3, 25.4, 25.3]                                                                          #mm
-original_area = [12.9*3.3, 12.8*2.8, 12.6*3.2, 12.8*3.2, 12.7*2.7,12.7*2.9, 12.6*3.1,12.5*2.8,12.8*2.6,12.7*2.7,12.6*3.4,12.7*2.8,12.7*3.2,12.8*2.9]                #mm^2
+original_area = [1.05457989,0.9707070974,1.286089239,1.613168724]
+original_length = [0.002061640983,0.002124114952,0.001874219075,0.001686797168]                
 
-for i in range(1,15):
+for i in range(1,5):
     globals()['load_extension_%s' % i] = []
-    filename = 'T_Tension_' + str(i) + '.csv'
+    filename = 'T_Flexure_' + str(i) + '.csv'
     with open(filename) as file:
         reader = csv.reader(file, delimiter = ',')
         for j in range(7):
@@ -31,13 +31,13 @@ for i in range(1,15):
     globals()['length_array_%s' %i] = np.array([original_length] * len(globals()['extension_%s' %i]))
     globals()['area_array_%s' %i] = np.array([original_area] * len(globals()['load_%s' %i]))
 
-    globals()['strain_%s'%i] = np.divide(globals()['extension_%s' %i], globals()['length_array_%s' %i][:,0])
-    globals()['stress_%s'%i] = np.divide(globals()['load_%s' %i], globals()['area_array_%s' %i][:,0])
-    thelabel = 'Tensile specimen ' + str(i)
+    globals()['strain_%s'%i] = np.multiply(globals()['extension_%s' %i], globals()['length_array_%s' %i][:,0])
+    globals()['stress_%s'%i] = np.multiply(globals()['load_%s' %i], globals()['area_array_%s' %i][:,0])
+    thelabel = 'Flexure specimen ' + str(i)
     plt.plot(globals()['strain_%s'%i], globals()['stress_%s'%i], label=thelabel)
     plt.legend()
 
-plt.title("Hand Layup Tensile Stress-Strain")
+plt.title("Hand Layup Flexure Stress-Strain")
 plt.xlabel('Strain, mm/mm')
 plt.ylabel('Stress, MPa')
 plt.show()
