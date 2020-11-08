@@ -8,7 +8,7 @@ import pwlf
 import warnings
 #Indicate sample ID and group here (Flexure)
 #===========================================
-file_id = 1
+file_id = 2
 file_group = 't'
 #===========================================
 
